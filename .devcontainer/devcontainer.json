@@ -18,7 +18,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"emallin.phpunit"
+				"emallin.phpunit",
+				"SanderRonde.phpstan-vscode"
 			]
 		}
 	}
