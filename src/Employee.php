@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Payroll;
 
 use BadMethodCallException;
+use InvalidArgumentException;
 
 class Employee
 {
@@ -16,7 +17,43 @@ class Employee
     private ?float $commissionRate;
 
 
-    public function __construct(
+
+    public static function make(
+        int $empId,
+        string $name,
+        string $address,
+        string $salaryType,
+        float $amount,
+        ?float $commissionRate = null
+    ): Employee {
+
+        if (($res = self::validateData(salaryType: $salaryType, commissionRate: $commissionRate)) !== true) {
+            throw new EmployeeException($res);
+        }
+
+
+        return new self(...func_get_args());
+    }
+
+
+    private static function validateData(
+        string $salaryType,
+        ?float $commissionRate
+    ): string|bool {
+        if (!in_array($salaryType, ["H", "C", "S"])) {
+            return "invalid salary type";
+        }
+
+
+        if ($salaryType === "C" && ($commissionRate < 0 || $commissionRate === null)) {
+            return "invalid commission rate";
+        }
+
+        return true;
+    }
+
+
+    private function __construct(
         int $empId,
         string $name,
         string $address,
@@ -24,6 +61,7 @@ class Employee
         float $amount,
         ?float $commissionRate = null
     ) {
+
         $this->empId = $empId;
         $this->name = $name;
         $this->address = $address;
@@ -42,7 +80,7 @@ class Employee
         if (in_array($prop, $members)) {
             return $this->$prop;
         }
-        
+
         throw new BadMethodCallException("$method not found.");
     }
 }
