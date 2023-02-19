@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Payroll;
 
-use Exception;
-
 class EmployeeRepository
 {
     public function addEmployee(
