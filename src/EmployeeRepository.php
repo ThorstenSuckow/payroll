@@ -11,8 +11,9 @@ class EmployeeRepository
         string $name,
         string $address,
         string $salaryType,
-        float $amount
+        float $amount,
+        ?float $commision = null
     ): Employee {
-        return new Employee($empId, $name, $address, $salaryType, $amount);
+        return new Employee($empId, $name, $address, $salaryType, $amount, $commision);
     }
 }

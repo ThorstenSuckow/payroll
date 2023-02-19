@@ -17,10 +17,16 @@ class EmployeeRepositoryTest extends TestCase
     {
         $repository = new EmployeeRepository();
 
-        $employeeData = [1234, "Peter Parker", "New York", "H", 1245.5];
-        $employee = $repository->addEmployee(...$employeeData);
+        $employeeData = [
+            [1234, "Peter Parker", "New York", "H", 1245.5],
+            [1234, "Peter Parker", "New York", "S", 1245.5], 
+            [1234, "Peter Parker", "New York", "C", 1245.5, 400]
+        ];
 
-        $this->assertEmployeeData($employee, ...$employeeData);
+        foreach ($employeeData as $data) {
+            $employee = $repository->addEmployee(...$data);
+            $this->assertEmployeeData($employee, ...$data);    
+        }
     }
 
 
@@ -30,7 +36,8 @@ class EmployeeRepositoryTest extends TestCase
         string $name,
         string $address,
         string $salaryType,
-        float $amount
+        float $amount,
+        float $commissionRate = null
     ) {
 
         $this->assertSame($empId, $employee->getEmpId());
@@ -38,5 +45,8 @@ class EmployeeRepositoryTest extends TestCase
         $this->assertSame($address, $employee->getAddress());
         $this->assertSame($salaryType, $employee->getSalaryType());
         $this->assertSame($amount, $employee->getAmount());
+        $this->assertSame($commissionRate, $employee->getCommissionRate());
+  
+
     }
 }

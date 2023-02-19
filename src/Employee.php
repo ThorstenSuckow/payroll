@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Payroll;
 
+use BadMethodCallException;
+
 class Employee
 {
     private readonly int $empId;
@@ -11,6 +13,7 @@ class Employee
     private string $address;
     private string $salaryType;
     private float $amount;
+    private ?float $commissionRate;
 
 
     public function __construct(
@@ -18,13 +21,15 @@ class Employee
         string $name,
         string $address,
         string $salaryType,
-        float $amount
+        float $amount,
+        ?float $commissionRate = null
     ) {
         $this->empId = $empId;
         $this->name = $name;
         $this->address = $address;
         $this->salaryType = $salaryType;
         $this->amount = $amount;
+        $this->commissionRate = $commissionRate;
     }
 
 
@@ -32,10 +37,12 @@ class Employee
     {
         $prop = lcfirst(substr($method, 3));
 
-        $members = ["empId", "name", "address", "salaryType", "amount"];
+        $members = ["empId", "name", "address", "salaryType", "amount", "commissionRate"];
 
         if (in_array($prop, $members)) {
             return $this->$prop;
         }
+        
+        throw new BadMethodCallException("$method not found.");
     }
 }
