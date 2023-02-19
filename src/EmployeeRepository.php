@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Payroll;
 
+use Exception;
+
 class EmployeeRepository
 {
     public function addEmployee(
@@ -14,6 +16,20 @@ class EmployeeRepository
         float $amount,
         ?float $commision = null
     ): Employee {
-        return new Employee($empId, $name, $address, $salaryType, $amount, $commision);
+
+
+        try {
+            $employee = Employee::make($empId, $name, $address, $salaryType, $amount, $commision);
+        } catch (EmployeeException $e) {
+            throw new EmployeeRepositoryException("not a valid Employee", 0, $e);
+        }
+
+        return $this->add($employee);
+    }
+
+
+    private function add(Employee $employee): Employee
+    {
+        return $employee;
     }
 }

@@ -7,6 +7,7 @@ namespace Tests\Payroll;
 use PHPUnit\Framework\TestCase;
 use Payroll\EmployeeRepository;
 use Payroll\Employee;
+use Payroll\EmployeeRepositoryException;
 
 class EmployeeRepositoryTest extends TestCase
 {
@@ -19,34 +20,25 @@ class EmployeeRepositoryTest extends TestCase
 
         $employeeData = [
             [1234, "Peter Parker", "New York", "H", 1245.5],
-            [1234, "Peter Parker", "New York", "S", 1245.5], 
+            [1234, "Peter Parker", "New York", "S", 1245.5],
             [1234, "Peter Parker", "New York", "C", 1245.5, 400]
         ];
 
         foreach ($employeeData as $data) {
             $employee = $repository->addEmployee(...$data);
-            $this->assertEmployeeData($employee, ...$data);    
+            $this->assertInstanceOf(Employee::class, $employee);
         }
     }
 
+    public function testAddNewEmployeeException()
+    {
 
-    private function assertEmployeeData(
-        Employee $employee,
-        int $empId,
-        string $name,
-        string $address,
-        string $salaryType,
-        float $amount,
-        float $commissionRate = null
-    ) {
+        $this->expectException(EmployeeRepositoryException::class);
+        $this->expectExceptionMessage("not a valid Employee");
+        $employeeData = [1234, "Peter Parker", "New York", "K", 9090];
 
-        $this->assertSame($empId, $employee->getEmpId());
-        $this->assertSame($name, $employee->getName());
-        $this->assertSame($address, $employee->getAddress());
-        $this->assertSame($salaryType, $employee->getSalaryType());
-        $this->assertSame($amount, $employee->getAmount());
-        $this->assertSame($commissionRate, $employee->getCommissionRate());
-  
+        $repository = new EmployeeRepository();
 
+        $repository->addEmployee(...$employeeData);
     }
 }

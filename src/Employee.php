@@ -40,10 +40,10 @@ class Employee
         string $salaryType,
         ?float $commissionRate
     ): string|bool {
+
         if (!in_array($salaryType, ["H", "C", "S"])) {
             return "invalid salary type";
         }
-
 
         if ($salaryType === "C" && ($commissionRate < 0 || $commissionRate === null)) {
             return "invalid commission rate";
