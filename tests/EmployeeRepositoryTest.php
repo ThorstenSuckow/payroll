@@ -17,18 +17,53 @@ class EmployeeRepositoryTest extends TestCase
     public function testAddNewEmployee()
     {
         $repository = new EmployeeRepository();
+        $this->assertSame(0, $repository->employeeCount());
 
         $employeeData = [
-            [1234, "Peter Parker", "New York", "H", 1245.5],
-            [1234, "Peter Parker", "New York", "S", 1245.5],
-            [1234, "Peter Parker", "New York", "C", 1245.5, 400]
+            $this->getEmployeeTestData(1234, "Peter Parker", "New York", "H", 1245.5),
+            $this->getEmployeeTestData(12345, "Peter Parker", "New York", "S", 1245.5),
+            $this->getEmployeeTestData(123456, "Peter Parker", "New York", "C", 1245.5, 500),
         ];
 
+        $employeeCount = 0;
         foreach ($employeeData as $data) {
             $employee = $repository->addEmployee(...$data);
             $this->assertInstanceOf(Employee::class, $employee);
+            $employeeCount++;
+            $this->assertSame($employeeCount, $repository->employeeCount());
         }
     }
+
+
+    /**
+     * Use Case 2: Deleting an Employee
+     */
+    public function testDeleteEmployee()
+    {
+        $existingEmpId = 1234;
+        $repository = new EmployeeRepository();
+
+        $this->assertSame(0, $repository->employeeCount());
+
+        $repository->addEmployee(...$this->getEmployeeTestData(empId: $existingEmpId));
+
+        $this->assertTrue($repository->employeeExists($existingEmpId));
+        $this->assertTrue($repository->deleteEmployee($existingEmpId));
+    }
+
+
+    public function testDeleteEmployeeException()
+    {
+        $this->expectException(EmployeeRepositoryException::class);
+        $this->expectExceptionMessageMatches("/Employee not found/");
+        $missingEmpId = 55555;
+        $repository = new EmployeeRepository();
+
+        $this->assertFalse($repository->employeeExists($missingEmpId));
+
+        $repository->deleteEmployee($missingEmpId);
+    }
+
 
     public function testAddNewEmployeeException()
     {
@@ -40,5 +75,17 @@ class EmployeeRepositoryTest extends TestCase
         $repository = new EmployeeRepository();
 
         $repository->addEmployee(...$employeeData);
+    }
+
+
+    private function getEmployeeTestData(
+        int $empId,
+        string $name = "",
+        string $address = "",
+        string $salaryType = "H",
+        float $amount = 1,
+        float $commissionRate = 0
+    ): array {
+        return [$empId, $name, $address, $salaryType, $amount, $commissionRate];
     }
 }
