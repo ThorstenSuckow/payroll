@@ -70,6 +70,11 @@ class Employee
     }
 
 
+    public function worksByHour(): bool
+    {
+        return $this->salaryType === "H";
+    }
+
     public function __call($method, $args): mixed
     {
         $prop = lcfirst(substr($method, 3));

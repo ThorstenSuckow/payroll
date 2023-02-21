@@ -25,6 +25,20 @@ class EmployeeTest extends TestCase
         }
     }
 
+    public function testWorksByHour()
+    {
+        $employeeData = [
+            "H" => [1234, "Peter Parker", "New York", "H", 1245.5],
+            "S" => [1234, "Peter Parker", "New York", "S", 1245.5]
+        ];
+
+        $employee = Employee::make(...$employeeData["H"]);
+        $this->assertTrue($employee->worksByHour());
+
+        $employee = Employee::make(...$employeeData["S"]);
+        $this->assertFalse($employee->worksByHour());
+    }
+
     public function testMakeException()
     {
         $employeeData = [
