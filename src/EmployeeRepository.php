@@ -34,7 +34,7 @@ class EmployeeRepository
     public function postTimeCard(int $empId, DateTime $date, int $hours): ?TimeCard
     {
         if (!$this->employeeExists($empId)) {
-            return null;
+            throw new EmployeeRepositoryException("Employee not found (empId=$empId)");
         }
 
         if (!array_key_exists($empId, $this->timeCards)) {

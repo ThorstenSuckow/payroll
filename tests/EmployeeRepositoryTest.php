@@ -101,6 +101,16 @@ class EmployeeRepositoryTest extends TestCase
     }
 
 
+    public function testPostTimeCardEmployeeMissing()
+    {
+        $this->expectException(EmployeeRepositoryException::class);
+        $this->expectExceptionMessageMatches("/Employee not found/");
+
+        $repository = new EmployeeRepository();
+        $repository->postTimeCard(1234, new DateTime(), 12);
+    }
+
+
     private function getEmployeeTestData(
         int $empId,
         string $name = "",
