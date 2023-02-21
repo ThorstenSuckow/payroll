@@ -37,6 +37,10 @@ class EmployeeRepository
             throw new EmployeeRepositoryException("Employee not found (empId=$empId)");
         }
 
+        if ($this->employeeExists($empId) && !$this->employee($empId)->worksByHour()) {
+            throw new EmployeeRepositoryException("Employee does not work by the hour (empId=$empId)");
+        }
+
         if (!array_key_exists($empId, $this->timeCards)) {
             $this->timeCards[$empId] = [];
         }
@@ -82,5 +86,15 @@ class EmployeeRepository
         $this->data[$empId] = $employee;
 
         return $employee;
+    }
+
+
+    public function employee(int $empId): ?Employee
+    {
+        if (!$this->employeeExists($empId)) {
+            return null;
+        }
+
+        return $this->data[$empId];
     }
 }

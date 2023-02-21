@@ -31,6 +31,7 @@ class EmployeeRepositoryTest extends TestCase
         foreach ($employeeData as $data) {
             $employee = $repository->addEmployee(...$data);
             $this->assertInstanceOf(Employee::class, $employee);
+            $this->assertSame($repository->employee($data[0]), $employee);
             $employeeCount++;
             $this->assertSame($employeeCount, $repository->employeeCount());
         }
@@ -110,6 +111,17 @@ class EmployeeRepositoryTest extends TestCase
         $repository->postTimeCard(1234, new DateTime(), 12);
     }
 
+
+    public function testPostTimeCardEmployeeNotHourly()
+    {
+
+        $this->expectException(EmployeeRepositoryException::class);
+        $this->expectExceptionMessageMatches("/Employee does not work by the hour/");
+
+        $repository = new EmployeeRepository();
+        $repository->addEmployee(...$this->getEmployeeTestData(empId: 1234, salaryType: "S"));
+        $repository->postTimeCard(1234, new DateTime(), 20);
+    }
 
     private function getEmployeeTestData(
         int $empId,
