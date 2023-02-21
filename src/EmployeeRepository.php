@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Payroll;
 
+use DateTime;
+
 class EmployeeRepository
 {
     private array $data = [];
+    private array $timeCards = [];
 
 
     public function addEmployee(
@@ -25,6 +28,23 @@ class EmployeeRepository
         }
 
         return $this->add($employee);
+    }
+
+
+    public function postTimeCard(int $empId, DateTime $date, int $hours): ?TimeCard
+    {
+        if (!$this->employeeExists($empId)) {
+            return null;
+        }
+
+        if (!array_key_exists($empId, $this->timeCards)) {
+            $this->timeCards[$empId] = [];
+        }
+
+        $timeCard = TimeCard::make(clone $date, $hours);
+        $this->timeCards[$empId][] = TimeCard::make($date, $hours);
+
+        return $timeCard;
     }
 
 

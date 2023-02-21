@@ -8,6 +8,8 @@ use PHPUnit\Framework\TestCase;
 use Payroll\EmployeeRepository;
 use Payroll\Employee;
 use Payroll\EmployeeRepositoryException;
+use DateTime;
+use Payroll\TimeCard;
 
 class EmployeeRepositoryTest extends TestCase
 {
@@ -75,6 +77,27 @@ class EmployeeRepositoryTest extends TestCase
         $repository = new EmployeeRepository();
 
         $repository->addEmployee(...$employeeData);
+    }
+
+
+    /**
+     * Use Case 3: Post a Time Card
+     */
+    public function testPostTimeCard()
+    {
+        $repository = new EmployeeRepository();
+
+        $repository->addEmployee(...$this->getEmployeeTestData(empId: 1234, salaryType: "H"));
+
+        $date = new DateTime();
+        $hours = 20;
+
+        $timeCard = $repository->postTimeCard(1234, $date, $hours);
+
+        $this->assertInstanceOf(TimeCard::class, $timeCard);
+        $this->assertNotSame($date, $timeCard->getDate());
+        $this->assertSame($date->format("Y-m-d H:i:s"), $timeCard->getDate()->format("Y-m-d H:i:s"));
+        $this->assertSame($hours, $timeCard->getHours());
     }
 
 
