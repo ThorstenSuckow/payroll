@@ -19,10 +19,10 @@ class TimeCard
         return new self($date, $hours);
     }
 
-    public function equalTo(Object $cmp): bool
+    public function equalTo(object $cmp): bool
     {
         $myClass = self::class;
-        return ($cmp === $this) ||        
+        return ($cmp === $this) ||
                (($cmp instanceof $myClass) &&
                ($cmp->getDate()->format("Y-m-d H:i:s") === $this->getDate()->format("Y-m-d H:i:s")) &&
                $cmp->getHours() === $this->getHours());

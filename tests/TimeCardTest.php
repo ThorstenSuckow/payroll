@@ -30,11 +30,10 @@ class TimeCardTest extends TestCase
         $hours = 100;
 
         $timeCard = TimeCard::make($date, $hours);
-        
+
         $this->assertTrue($timeCard->equalTo($timeCard));
         $this->assertTrue($timeCard->equalTo(TimeCard::make($date, $hours)));
         $this->assertFalse($timeCard->equalTo(TimeCard::make($date, $hours + 1)));
-        $this->assertFalse($timeCard->equalTo(new stdClass));
+        $this->assertFalse($timeCard->equalTo(new stdClass()));
     }
-
 }
