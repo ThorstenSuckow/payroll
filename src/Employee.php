@@ -8,6 +8,8 @@ use BadMethodCallException;
 
 class Employee
 {
+    use GetterTrait;
+
     private readonly int $empId;
     private string $name;
     private string $address;
@@ -75,16 +77,9 @@ class Employee
         return $this->salaryType === "H";
     }
 
-    public function __call($method, $args): mixed
+
+    private function getMembers(): array
     {
-        $prop = lcfirst(substr($method, 3));
-
-        $members = ["empId", "name", "address", "salaryType", "amount", "commissionRate"];
-
-        if (in_array($prop, $members)) {
-            return $this->$prop;
-        }
-
-        throw new BadMethodCallException("$method not found.");
+        return ["empId", "name", "address", "salaryType", "amount", "commissionRate"];
     }
 }
