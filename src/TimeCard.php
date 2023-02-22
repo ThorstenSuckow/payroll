@@ -9,6 +9,8 @@ use DateTime;
 
 class TimeCard
 {
+    use GetterTrait;
+
     private readonly DateTime $date;
     private readonly int $hours;
 
@@ -17,23 +19,24 @@ class TimeCard
         return new self($date, $hours);
     }
 
-    private function __construct(DateTime $date, int $hours)
+    public function equalTo(Object $cmp): bool
     {
-        $this->date = $date;
-        $this->hours = $hours;
+        $myClass = self::class;
+        return ($cmp === $this) ||        
+               (($cmp instanceof $myClass) &&
+               ($cmp->getDate()->format("Y-m-d H:i:s") === $this->getDate()->format("Y-m-d H:i:s")) &&
+               $cmp->getHours() === $this->getHours());
     }
 
 
-    public function __call($method, $args): mixed
+    private function __construct(DateTime $date, int $hours)
     {
-        $prop = lcfirst(substr($method, 3));
+        $this->date = clone $date;
+        $this->hours = $hours;
+    }
 
-        $members = ["date", "hours"];
-
-        if (in_array($prop, $members)) {
-            return $this->$prop;
-        }
-
-        throw new BadMethodCallException("$method not found.");
+    private function getMembers(): array
+    {
+        return ["date", "hours"];
     }
 }

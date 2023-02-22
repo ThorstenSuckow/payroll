@@ -96,9 +96,7 @@ class EmployeeRepositoryTest extends TestCase
         $timeCard = $repository->postTimeCard(1234, $date, $hours);
 
         $this->assertInstanceOf(TimeCard::class, $timeCard);
-        $this->assertNotSame($date, $timeCard->getDate());
-        $this->assertSame($date->format("Y-m-d H:i:s"), $timeCard->getDate()->format("Y-m-d H:i:s"));
-        $this->assertSame($hours, $timeCard->getHours());
+        $this->assertTrue($timeCard->equalTo(TimeCard::make($date, $hours)));
     }
 
 
