@@ -7,7 +7,7 @@ namespace Payroll;
 use BadMethodCallException;
 use DateTime;
 
-class TimeCard
+class TimeCard implements Equatable
 {
     use GetterTrait;
 
