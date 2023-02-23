@@ -10,7 +10,7 @@ class EmployeeRepository
 {
     private array $data = [];
     private array $timeCards = [];
-
+    private array $salesReceipt = [];
 
     public function addEmployee(
         int $empId,
@@ -45,10 +45,19 @@ class EmployeeRepository
             $this->timeCards[$empId] = [];
         }
 
-        $timeCard = TimeCard::make(clone $date, $hours);
+        $timeCard = TimeCard::make($date, $hours);
         $this->timeCards[$empId][] = TimeCard::make($date, $hours);
 
         return $timeCard;
+    }
+
+
+    public function postSalesReceipt(int $empId, DateTime $date, float $amount): ?SalesReceipt
+    {
+        $salesReceipt = SalesReceipt::make($date, $amount);
+        $this->salesReceipt[$empId][] = SalesReceipt::make($date, $amount);
+
+        return $salesReceipt;
     }
 
 

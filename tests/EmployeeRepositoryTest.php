@@ -10,6 +10,7 @@ use Payroll\Employee;
 use Payroll\EmployeeRepositoryException;
 use DateTime;
 use Payroll\TimeCard;
+use Payroll\SalesReceipt;
 
 class EmployeeRepositoryTest extends TestCase
 {
@@ -119,6 +120,33 @@ class EmployeeRepositoryTest extends TestCase
         $repository = new EmployeeRepository();
         $repository->addEmployee(...$this->getEmployeeTestData(empId: 1234, salaryType: "S"));
         $repository->postTimeCard(1234, new DateTime(), 20);
+    }
+
+
+    /**
+     * Use Case 4: Posting a Sales Receipt
+     */
+    public function testPostSalesReceipt()
+    {
+        $repository = new EmployeeRepository();
+
+        $empId = 1234;
+        $commissionRate = 100;
+        $salaryType = "C";
+
+        $employee = $repository->addEmployee(
+            ...$this->getEmployeeTestData(
+                empId: $empId,
+                salaryType: $salaryType,
+                commissionRate: $commissionRate
+            )
+        );
+
+        $date = new DateTime();
+        $amount = 500;
+
+        $salesReceipt = $repository->postSalesReceipt($empId, $date, $amount);
+        $this->assertTrue($salesReceipt->equalTo(SalesReceipt::make($date, $amount)));
     }
 
     private function getEmployeeTestData(
