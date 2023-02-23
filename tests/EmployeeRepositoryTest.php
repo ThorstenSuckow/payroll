@@ -149,6 +149,17 @@ class EmployeeRepositoryTest extends TestCase
         $this->assertTrue($salesReceipt->equalTo(SalesReceipt::make($date, $amount)));
     }
 
+    public function testPostSalesReceiptEmployeeDoesNotExist()
+    {
+        $this->expectException(EmployeeRepositoryException::class);
+        $this->expectExceptionMessageMatches("/Employee not found/");
+
+        $repository = new EmployeeRepository();
+
+        $repository->postSalesReceipt(1234, new DateTime(), 500);
+    }
+
+
     private function getEmployeeTestData(
         int $empId,
         string $name = "",

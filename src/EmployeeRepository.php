@@ -54,6 +54,10 @@ class EmployeeRepository
 
     public function postSalesReceipt(int $empId, DateTime $date, float $amount): ?SalesReceipt
     {
+        if (!$this->employeeExists($empId)) {
+            throw new EmployeeRepositoryException("Employee not found (empId=$empId)");
+        }
+
         $salesReceipt = SalesReceipt::make($date, $amount);
         $this->salesReceipt[$empId][] = SalesReceipt::make($date, $amount);
 
