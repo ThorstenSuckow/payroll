@@ -65,7 +65,7 @@ class EmployeeRepository
 
         $salesReceipt = SalesReceipt::make($date, $amount);
         $this->salesReceipts[$empId][] = SalesReceipt::make($date, $amount);
-       
+
         return $salesReceipt;
     }
 
