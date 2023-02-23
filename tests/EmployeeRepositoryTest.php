@@ -159,6 +159,25 @@ class EmployeeRepositoryTest extends TestCase
         $repository->postSalesReceipt(1234, new DateTime(), 500);
     }
 
+    public function testPostSalesReceiptEmployeeIsNotCommissioned()
+    {
+        $this->expectException(EmployeeRepositoryException::class);
+        $this->expectExceptionMessageMatches("/Employee is not commissioned/");
+
+        $empId = 1234;
+        $salaryType = "S";
+
+        $repository = new EmployeeRepository();
+        $repository->addEmployee(
+            ...$this->getEmployeeTestData(
+                empId: $empId,
+                salaryType: $salaryType
+            )
+        );
+
+        $repository->postSalesReceipt(1234, new DateTime(), 500);
+    }
+
 
     private function getEmployeeTestData(
         int $empId,

@@ -10,7 +10,7 @@ class EmployeeRepository
 {
     private array $data = [];
     private array $timeCards = [];
-    private array $salesReceipt = [];
+    private array $salesReceipts = [];
 
     public function addEmployee(
         int $empId,
@@ -58,9 +58,14 @@ class EmployeeRepository
             throw new EmployeeRepositoryException("Employee not found (empId=$empId)");
         }
 
-        $salesReceipt = SalesReceipt::make($date, $amount);
-        $this->salesReceipt[$empId][] = SalesReceipt::make($date, $amount);
+        if ($this->employee($empId)->getSalaryType() !== "C") {
+            throw new EmployeeRepositoryException("Employee is not commissioned (empId=$empId)");
+        }
 
+
+        $salesReceipt = SalesReceipt::make($date, $amount);
+        $this->salesReceipts[$empId][] = SalesReceipt::make($date, $amount);
+       
         return $salesReceipt;
     }
 
