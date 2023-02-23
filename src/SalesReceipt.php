@@ -6,7 +6,7 @@ namespace Payroll;
 
 use DateTime;
 
-class SalesReceipt
+class SalesReceipt implements Equatable
 {
     use GetterTrait;
 
@@ -17,6 +17,19 @@ class SalesReceipt
     public static function make(DateTime $date, float $amount): self
     {
         return new self($date, $amount);
+    }
+
+    public function equalTo(object $cmp): bool
+    {
+        $thisClass = self::class;
+
+        return
+            ($cmp === $this) ||
+            (
+                ($cmp instanceof $thisClass) &&
+                ($cmp->getDate()->format("Y-m-d H:i:s") === $this->getDate()->format("Y-m-d H:i:s")) &&
+                ($cmp->getAmount() === $this->amount)
+            );
     }
 
 
