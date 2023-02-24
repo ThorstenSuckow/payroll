@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Payroll;
 
-use PHPUnit\Framework\TestCase;
+use Exception;
 use Payroll\Employee;
 use Payroll\EmployeeException;
-use Exception;
+use PHPUnit\Framework\TestCase;
 
 class EmployeeTest extends TestCase
 {

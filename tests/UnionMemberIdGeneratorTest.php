@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Payroll;
 
-use PHPUnit\Framework\TestCase;
 use Payroll\UnionMemberIdGenerator;
+use PHPUnit\Framework\TestCase;
 
 class UnionMemberIdGeneratorTest extends TestCase
 {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Payroll;
 
 use DateTime;
-use PHPUnit\Framework\TestCase;
 use Payroll\SalesReceipt;
+use PHPUnit\Framework\TestCase;
 
 class SalesReceiptTest extends TestCase
 {

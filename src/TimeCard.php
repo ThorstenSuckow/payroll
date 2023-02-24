@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Payroll;
 
-use BadMethodCallException;
 use DateTime;
 
 class TimeCard implements Equatable

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Payroll;
 
-use PHPUnit\Framework\TestCase;
-use Payroll\EmployeeRepository;
-use Payroll\Employee;
-use Payroll\EmployeeRepositoryException;
 use DateTime;
-use Payroll\TimeCard;
+use Payroll\Employee;
+use Payroll\EmployeeRepository;
+use Payroll\EmployeeRepositoryException;
 use Payroll\SalesReceipt;
+use Payroll\TimeCard;
+use PHPUnit\Framework\TestCase;
 
 class EmployeeRepositoryTest extends TestCase
 {
