@@ -1,8 +1,4 @@
-##
-# conjoon
-# ddev-ms-email
-# Copyright (C) 2022 Thorsten Suckow-Homberg https://github.com/conjoon/ddev-ms-email
-##
+
 name: payroll
 type: laravel
 docroot: src
