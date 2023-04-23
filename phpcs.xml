@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="php-lib-conjoon coding standards">
-    <description>The coding standard (PSR-12) for ThorstenSuckow/payroll.</description>
+<ruleset name="ThorstenSuckow/payroll coding standards">
+    <description>The coding standard (PSR-12) for ThorstenSuckow/payroll</description>
 
     <file>src/</file>
     <file>tests/</file>
