@@ -27,9 +27,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Payroll\Company;
+namespace Tests\Payroll\Domain\Company;
 
-use Payroll\Company\Employee;
+use Payroll\Domain\Company\Employee;
 use PHPUnit\Framework\TestCase;
 
 class EmployeeTest extends TestCase
