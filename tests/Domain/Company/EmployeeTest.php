@@ -34,10 +34,34 @@ use PHPUnit\Framework\TestCase;
 
 class EmployeeTest extends TestCase
 {
-    public function testConstruct(): void
+    public function testMake(): void
     {
-        $employee = new Employee();
+        $checks = ["H"];
+
+        foreach ($checks as $check) {
+            $data = $this->getTestData($check);
+
+            /* @phpstan-ignore-next-line */
+            $employee = Employee::make(...$data);
+
+            $this->assertSame($data["empId"], $employee->getEmpId());
+            $this->assertSame($data["name"], $employee->getName());
+            $this->assertSame($data["address"], $employee->getAddress());
+            $this->assertSame($data["salaryType"], $employee->getSalaryType());
+            $this->assertSame($data["rate"], $employee->getRate());
+            $this->assertSame($data["commissionRate"] ?? null, $employee->getCommissionRate());
+        }
 
         $this->assertInstanceOf(Employee::class, $employee);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getTestData(string $dataType): array
+    {
+        return [
+            "H" => ["empId" => "empId", "name" => "name", "address" => "address", "salaryType" => "H", "rate" => 0.0]
+        ][$dataType];
     }
 }
