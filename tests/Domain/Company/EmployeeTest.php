@@ -36,7 +36,7 @@ class EmployeeTest extends TestCase
 {
     public function testMake(): void
     {
-        $checks = ["H"];
+        $checks = ["H", "C", "S"];
 
         foreach ($checks as $check) {
             $data = $this->getTestData($check);
@@ -49,7 +49,13 @@ class EmployeeTest extends TestCase
             $this->assertSame($data["address"], $employee->getAddress());
             $this->assertSame($data["salaryType"], $employee->getSalaryType());
             $this->assertSame($data["rate"], $employee->getRate());
-            $this->assertSame($data["commissionRate"] ?? null, $employee->getCommissionRate());
+
+            if ($data["salaryType"] === "C") {
+                $this->assertNotNull($employee->getCommissionRate());
+                $this->assertSame($data["commissionRate"], $employee->getCommissionRate());
+            } else {
+                $this->assertNull($employee->getCommissionRate());
+            }
         }
 
         $this->assertInstanceOf(Employee::class, $employee);
@@ -61,7 +67,12 @@ class EmployeeTest extends TestCase
     protected function getTestData(string $dataType): array
     {
         return [
-            "H" => ["empId" => "empId", "name" => "name", "address" => "address", "salaryType" => "H", "rate" => 0.0]
+            "H" => ["empId" => "empId", "name" => "name", "address" => "address", "salaryType" => "H", "rate" => 0.0],
+            "S" => ["empId" => "empId", "name" => "name", "address" => "address", "salaryType" => "S", "rate" => 0.0],
+            "C" => [
+                "empId" => "empId", "name" => "name", "address" => "address", "salaryType" => "C", "rate" => 0.0,
+                "commissionRate" => 4.0
+            ]
         ][$dataType];
     }
 }

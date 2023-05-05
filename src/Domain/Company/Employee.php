@@ -29,7 +29,8 @@ declare(strict_types=1);
 
 namespace Payroll\Domain\Company;
 
-use BadMethodCallException;
+use Quant\Attributes\Getter;
+use Quant\Traits\GetterTrait;
 
 /**
  * @method string getEmpId()
@@ -39,8 +40,22 @@ use BadMethodCallException;
  * @method float getRate()
  * @method string|null getCommissionRate()
  */
+
 class Employee
 {
+    use GetterTrait;
+
+    final private function __construct(
+        #[Getter] private string $empId,
+        #[Getter] private string $name,
+        #[Getter] private string $address,
+        #[Getter] private string $salaryType,
+        #[Getter] private float $rate,
+        #[Getter] private ?float $commissionRate = null
+    ) {
+    }
+
+
     public static function make(
         string $empId,
         string $name,
@@ -51,40 +66,5 @@ class Employee
     ): static {
         /* @phpstan-ignore-next-line */
         return new static(...func_get_args());
-    }
-
-    final private function __construct(
-        private string $empId,
-        private string $name,
-        private string $address,
-        private string $salaryType,
-        private float $rate,
-        private ?float $commissionRate = null
-    ) {
-    }
-
-    /**
-     * @param string $method
-     * @param array<int, mixed> $args
-     */
-    public function __call(string $method, array $args): mixed
-    {
-        $prop = lcfirst(substr($method, 3));
-
-        $members = [
-            "empId",
-            "name",
-            "address",
-            "salaryType",
-            "rate",
-            "commissionRate"
-        ];
-
-
-        if (in_array($prop, $members)) {
-            return $this->$prop;
-        }
-
-        throw new BadMethodCallException("$method not found.");
     }
 }
