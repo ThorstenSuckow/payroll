@@ -4,7 +4,7 @@
  *
  * MIT License
  *
- * Copyright (c) 2023 Thorsten Suckow-Homberg https://github.com/ThorstenSuckow/payroll
+ * Copyright (c) 2023 Thorsten Suckow-Homberg https://github.com/quant-php/quant
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,46 +25,12 @@
  * SOFTWARE.
  */
 
-declare(strict_types=1);
 
-namespace Payroll\Domain\Company;
+namespace Quant\Attributes;
 
-use Quant\Traits\GetterTrait;
-use Quant\Attributes\Getter;
+use Attribute;
 
-/**
- * @method string getEmpId()
- * @method string getName()
- * @method string getAddress()
- * @method string getSalaryType()
- * @method float getRate()
- * @method string|null getCommissionRate()
- */
-
-class Employee
+#[Attribute]
+class Getter
 {
-    use GetterTrait;
-
-    final private function __construct(
-        #[Getter] private string $empId,
-        #[Getter] private string $name,
-        #[Getter] private string $address,
-        #[Getter] private string $salaryType,
-        #[Getter] private float $rate,
-        #[Getter] private ?float $commissionRate = null
-    ) {
-    }
-
-
-    public static function make(
-        string $empId,
-        string $name,
-        string $address,
-        string $salaryType,
-        float $rate,
-        float $commissionRate = null
-    ): static {
-        /* @phpstan-ignore-next-line */
-        return new static(...func_get_args());
-    }
 }

@@ -28,13 +28,31 @@
 
 namespace Quant\Traits;
 
-use Attribute;
 use BadMethodCallException;
+use Quant\Attributes\Getter;
 use ReflectionClass;
 
-
-#[Attribute]
-trait Getter
+/**
+ * Provides read-access to constructor property promoted object members with the Getter-attribute.
+ *
+ * @example
+ *    use Getter;
+ *    use GetterTrait;
+ *
+ *    class Target {
+ *         trait GetterTrait;
+ *
+ *         public function __construct(#[Getter]private string $value)
+ *         {
+ *         }
+ *     }
+ *
+ *    $target = new Target("Hello World");
+ *
+ *    echo $target->getValue(); // "Hello World"
+ *
+ */
+trait GetterTrait
 {
     /**
      * @var array<string, bool>
