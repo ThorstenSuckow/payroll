@@ -29,8 +29,8 @@ declare(strict_types=1);
 
 namespace Payroll\Domain\Company;
 
-use Quant\Attributes\Getter;
 use Quant\Traits\GetterTrait;
+use Quant\Attributes\Getter;
 
 /**
  * @method string getEmpId()

@@ -25,16 +25,12 @@
  * SOFTWARE.
  */
 
-declare(strict_types=1);
 
 namespace Quant\Traits;
 
 use BadMethodCallException;
 use Quant\Attributes\Getter;
 use ReflectionClass;
-use ReflectionParameter;
-use ReflectionMethod;
-
 
 /**
  * Provides read-access to constructor property promoted object members with the Getter-attribute.

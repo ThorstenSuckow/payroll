@@ -29,6 +29,8 @@
 namespace Quant\Attributes;
 
 use Attribute;
-#[Attribute] class Getter
+
+#[Attribute]
+class Getter
 {
 }
