@@ -6,7 +6,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Payroll\\": "src/"
+            "Payroll\\": "src/",
+            "Quant\\": "Quant/src"
         }
     },
     "autoload-dev": {
