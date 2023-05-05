@@ -75,7 +75,7 @@ trait GetterTrait
     {
         $requestedProp = lcfirst(substr($method, 3));
 
-        if ($this->getterCache[$requestedProp]) {
+        if (isset($this->getterCache[$requestedProp])) {
             return $this->$requestedProp;
         }
 
