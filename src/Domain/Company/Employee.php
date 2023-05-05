@@ -41,14 +41,6 @@ use BadMethodCallException;
  */
 class Employee
 {
-    private string $empId;
-
-    private string $name;
-    private string $address;
-    private string $salaryType;
-    private float $rate;
-    private ?float $commissionRate;
-
     public static function make(
         string $empId,
         string $name,
@@ -62,19 +54,13 @@ class Employee
     }
 
     final private function __construct(
-        string $empId,
-        string $name,
-        string $address,
-        string $salaryType,
-        float $rate,
-        float $commissionRate = null
+        private string $empId,
+        private string $name,
+        private string $address,
+        private string $salaryType,
+        private float $rate,
+        private ?float $commissionRate = null
     ) {
-        $this->empId = $empId;
-        $this->name = $name;
-        $this->address = $address;
-        $this->salaryType = $salaryType;
-        $this->rate = $rate;
-        $this->commissionRate = $commissionRate;
     }
 
     /**
