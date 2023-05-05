@@ -29,8 +29,7 @@ declare(strict_types=1);
 
 namespace Payroll\Domain\Company;
 
-use Quant\Attributes\Getter;
-use Quant\Traits\GetterTrait;
+use Quant\Traits\Getter;
 
 /**
  * @method string getEmpId()
@@ -43,7 +42,7 @@ use Quant\Traits\GetterTrait;
 
 class Employee
 {
-    use GetterTrait;
+    use Getter;
 
     final private function __construct(
         #[Getter] private string $empId,
